@@ -6,7 +6,7 @@
 目前驗證集對於6碼型態的驗證碼的單碼辨識率達到```98.84%```，整體辨識成功率達到```91.13%```。
 底下有詳盡的說明。
 
-(僅供學術研究用途，切勿違法使用於自動訂票等，以免觸犯相關法規。)
+#### (僅供學術研究用途，切勿違法使用於大量自動訂票等，以免觸犯相關法規。)
 
 |Name|Description|
 |----|----|
@@ -171,9 +171,9 @@ Non-trainable params: 0
 
 ```python
 for index in range(1, 50001, 1)
-    image = Image.open("./data/train_set/" + str(index) + ".jpg")
-    nparr = np.array(image)
-    nparr = nparr / 255.0
+    image = Image.open("./data/train_set/" + str(index) + ".jpg") # 讀取圖片
+    nparr = np.array(image) # 轉成np array
+    nparr = nparr / 255.0
 ```
 
 這時我們下```nparr.shape```，可以看到矩陣的大小是```(60, 200, 3)```，跟前面模型設計的Input是相同的。
@@ -192,17 +192,23 @@ train_data = np.stack([np.array(Image.open("./data/train_set/" + str(index) + ".
 ```
 [[第一張第1個數字,...,最後一張第1個數字], [第一張第2個數字,...,最後一張第2個數字], [...], [...], [...], [...]]
 ```
-而其中每個數字都是以one-hot encoding表示，例如2就是```[0, 0, 1, 0, ....,0]```
+而其中每個數字都是以one-hot encoding表示，例如0就是```[1, 0, 0, 0, ....,0]```，2就是```[0, 0, 1, 0, ....,0]```
 
 ```python
-traincsv = open('./data/train_set/train.csv', 'r', encoding = 'utf8')
-read_label = [toonehot(row[1]) for row in csv.reader(traincsv)]
-train_label = [[] for _ in range(6)]
+traincsv = open('./data/train_set/train.csv', 'r', encoding = 'utf8') # 讀取訓練集的標記
+read_label = [toonehot(row[1]) for row in csv.reader(traincsv)] # 將每一行的六個數字轉成one-hot encoding
+train_label = [[] for _ in range(6)] # 6組輸出的答案要放到train_label
+
 for arr in read_label:
     for index in range(6):
-        train_label[index].append(arr[index])
-train_label = [arr for arr in np.asarray(train_label)]
+        train_label[index].append(arr[index]) # 原本是[[第1字答案, ..., 第6字答案],......, [第1字答案, ..., 第6字答案]]
+                                              # 要轉成[[第1字答案,..., 第1字答案],..., [第6字答案,..., 第6字答案]]才符合Y的輸入
+train_label = [arr for arr in np.asarray(train_label)] # 最後要把6個numpy array 放在一個list
 ```
+
+(這邊忘記說，```toonehot```是定義在```train_cnn.py```中的一個function，功能是將傳入的字串切開分別轉成one-hot encoding再回傳。
+舉個例子:傳入```123456```，就會回傳```[[1轉onehot], [2轉onehot], ..., [6轉onehot]]```)
+
 
 ## Validation set
 因為擔心模仿產生的訓練集沒辦法有效的使用在真實的驗證碼上，因此驗證集的部分我是用的是自行手動標記的真實驗證碼，這部分資料載入和處理方式跟上面相同，data放在```vali_data```，label放在```vali_label```。
@@ -218,7 +224,7 @@ checkpoint = ModelCheckpoint(filepath, monitor='val_digit6_acc', verbose=1, save
 
 用於儲存最佳辨識率的模型，每次epoch完會檢查一次，如果比先前最佳的acc高，就會儲存model到filepath。
 
-因為在多輸出模型中沒有像是各輸出平均的acc這種東西，觀察前幾epoch後發現val_digit6_acc上升最慢，因此用它當作checkpoint的monitor。
+因為在多輸出模型中沒有像是各輸出平均的acc這種東西，觀察前幾epoch後發現```val_digit6_acc```上升最慢，因此用它當作checkpoint的monitor。
 (如果要自定義monitor可以自己寫callback，這部分留到未來有空再來實作。)
 
 ### 2.Earlystopping
@@ -235,7 +241,7 @@ earlystop = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto'
 tensorBoard = TensorBoard(log_dir = "./logs", histogram_freq = 1)
 ```
 
-TensorBoard可以讓我們更方便的以圖形化界面檢視訓練結果，要檢視時可以輸入tensorboard --logdir=logs來啟動。
+TensorBoard可以讓我們更方便的以圖形化界面檢視訓練結果，要檢視時可以輸入```tensorboard --logdir=logs```來啟動。
 
 最後把他們三個放到list中即可。
 ```python
