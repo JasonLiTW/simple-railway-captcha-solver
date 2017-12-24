@@ -66,7 +66,7 @@
 ## Building Convolution Neural Network
 來建立一個簡單結構的CNN吧!
 
-輸入是60*200的圖片，共有3個channel(R/G/B)，所以是shape會是(60, 200, 3)。
+輸入是```60*200```的圖片，共有3個channel(R/G/B)，所以是shape會是```(60, 200, 3)```。
 
 中間透過數層由ReLU函數激發的Convolution Layer擷取特徵，並以2x2的Max pooling layer採樣減少計算量，最後經過一個Dropout Layer隨機捨棄一些神經元(避免overfitting)和Flatten Layer來把資料降到1維，輸出到全連接層：6個10神經元的Softmax regression分類器。
 
@@ -210,7 +210,7 @@ train_label = [arr for arr in np.asarray(train_label)]
 ## Callback
 在這邊要用到三個callback:
 
-1.ModelCheckPoint
+### 1.ModelCheckPoint
 
 ```python
 checkpoint = ModelCheckpoint(filepath, monitor='val_digit6_acc', verbose=1, save_best_only=True, mode='max')
@@ -221,7 +221,7 @@ checkpoint = ModelCheckpoint(filepath, monitor='val_digit6_acc', verbose=1, save
 因為在多輸出模型中沒有像是各輸出平均的acc這種東西，觀察前幾epoch後發現val_digit6_acc上升最慢，因此用它當作checkpoint的monitor。
 (如果要自定義monitor可以自己寫callback，這部分留到未來有空再來實作。)
 
-2.Earlystopping
+### 2.Earlystopping
 
 ```python
 earlystop = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto')
@@ -229,7 +229,7 @@ earlystop = EarlyStopping(monitor='val_loss', patience=2, verbose=1, mode='auto'
 
 這邊的monitor設為val_loss，patience設為2，也就是在驗證集的loss連續2次不再下降時，就會提早結束訓練。
 
-3.TensorBoard
+### 3.TensorBoard
 
 ```python
 tensorBoard = TensorBoard(log_dir = "./logs", histogram_freq = 1)
