@@ -506,8 +506,11 @@ The monitor set to ```val_loss```, ```patience``` set to 2, that is, if the loss
 tensorBoard = TensorBoard(log_dir = "./logs", histogram_freq = 1)
 ```
 TensorBoard is a great visualization tool, we can use it to view our training result.
+
 ```python
-tensorboard --logdir=logs``` to start it.
+tensorboard --logdir=logs
+```
+to start it.
 
 
 Finally, put them into a list.
