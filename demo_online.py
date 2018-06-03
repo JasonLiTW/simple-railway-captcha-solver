@@ -8,7 +8,7 @@ from PIL import Image
 from keras.models import load_model, Model
 import time
 import random
-
+IDNumber = "X123456789" # 填入你的身分證字號
 model = None
 model5 = load_model("./data/model/imitate_5_model.h5") # 辨識5碼的Model
 model6 = load_model("./data/model/imitate_6_model.h5") # 辨識6碼的Model
@@ -20,7 +20,7 @@ correct, wrong = 0, 0
 for _ in range(1000):# 跑1000次
     driver.get('http://railway1.hinet.net/Foreign/TW/ecsearch.html')
     id_textbox = driver.find_element_by_id('person_id')
-    id_textbox.send_keys('E125394642') # 填入你的身分證字號
+    id_textbox.send_keys(IDNumber)
     button = driver.find_element_by_css_selector('body > div.container > div.row.contents > div > form > div > div.col-xs-12 > button')
     button.click()
     driver.save_screenshot('tmp.png')
