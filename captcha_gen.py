@@ -101,8 +101,8 @@ def generate(GENNUM, SAVEPATH, ENGP=25, FIVEP=0, ENGNOLIMIT=False, filename="tra
             newtext.draw(image=captcha)
             offset = newtext.next_offset
             captchastr += str(newtext.letter)
-        letterlist.append([str(index), captchastr])
-        lenlist.append([str(index), captchalen])
+        letterlist.append([str(index).zfill(len(str(GENNUM))), captchastr])
+        lenlist.append([str(index).zfill(len(str(GENNUM))), captchalen])
         for obj in rectlist:
             obj.draw(image=captcha, overlay=True)
         captcha.convert("RGB").save(SAVEPATH + str(index).zfill(len(str(GENNUM))) + ".jpg", "JPEG")
