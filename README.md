@@ -28,7 +28,7 @@
 
 此專案僅供學術研究，所以請不要利用建立的模型辨識驗證碼去自動訂票，這是違法的喔。
 
-## 0.-Dependecies
+## 0.-Dependencies
 |Name|Version|
 |----|----|
 |tensorflow|1.4.0|
