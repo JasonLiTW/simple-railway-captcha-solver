@@ -19,7 +19,7 @@
 |data_augment.py|用於真實驗證碼的資料增強|
 |train_cnn_real_5.py|建立CNN並以真實驗證碼訓練(5碼辨識)|
 |train_cnn_real_6.py|建立CNN並以真實驗證碼訓練(6碼辨識)|
-|train_cnn_real_56.py|建立CNN並以真實驗證碼訓練(辨識是5碼or6碼)|
+|train_cnn_real_56.py|建立CNN並以真實驗證碼訓練(辨識是5碼or6碼)||
 |demo_cnn.py|Demo載入模型並以測試集評估辨識率|
 |demo_online.py|Demo載入模型並在台鐵網站上評估辨識率|
 
