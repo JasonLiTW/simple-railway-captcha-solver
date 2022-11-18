@@ -1,4 +1,13 @@
 # simple-railway-captcha-solver
+
+本專案自2018年後已經停止更新/維護，且台鐵已經在2019年改用reCAPTCHA代替傳統的驗證碼。
+
+(這個專案是我在大學閒暇時的研究，當時code寫得很雜亂，後續issue也都沒時間回覆。但還是希望有幫助到想做類似project的人！)
+
+**This project is no longer maintained. Archived this repo on 2022/11/18.**
+
+----
+
 [Click here or scroll down for english version](#english-version)
 
 ![image](./readme_img/head.gif)
